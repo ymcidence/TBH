@@ -22,6 +22,7 @@ class GCNLayer(tf.keras.layers.Layer):
         """
         return self.spectrum_conv(values, adjacency)
 
+    @tf.function
     def spectrum_conv(self, values, adjacency):
         """
         Convolution on a graph with graph Laplacian
@@ -34,6 +35,7 @@ class GCNLayer(tf.keras.layers.Layer):
         return conv_sc
 
     @staticmethod
+    @tf.function
     def graph_laplacian(adjacency):
         """
         :param adjacency: must be self-connected

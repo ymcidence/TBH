@@ -22,14 +22,14 @@ class TBH(tf.keras.Model):
         self.dis_2 = tf.keras.layers.Dense(1, activation='sigmoid')
 
     def call(self, inputs, training=True, mask=None):
-        feat_in = tf.cast(inputs[0], dtype=tf.float32)
+        feat_in = tf.cast(inputs[0][1], dtype=tf.float32)
         bbn, cbn = self.encoder(feat_in, training=training)
-        bn = self.tbn(bbn, cbn)
-        dis_1 = self.dis_1(bbn)
-        dis_2 = self.dis_2(bn)
-        feat_out = self.decoder(bn)
 
         if training:
+            bn = self.tbn(bbn, cbn)
+            dis_1 = self.dis_1(bbn)
+            dis_2 = self.dis_2(bn)
+            feat_out = self.decoder(bn)
             sample_bbn = inputs[1]
             sample_bn = inputs[2]
             dis_1_sample = self.dis_1(sample_bbn)

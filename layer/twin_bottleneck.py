@@ -3,7 +3,8 @@ import tensorflow as tf
 from layer import gcn
 
 
-def build_adjacency_hamming(tensor_in) -> tf.Tensor:
+@tf.function
+def build_adjacency_hamming(tensor_in):
     """
     Hamming-distance-based graph. It is self-connected.
     :param tensor_in: [N D]
