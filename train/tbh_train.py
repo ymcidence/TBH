@@ -14,8 +14,8 @@ def hook(query, base, label_q, label_b):
 
 @tf.function
 def adv_loss(real, fake):
-    real_loss = tf.keras.losses.binary_crossentropy(tf.ones_like(real), real)
-    fake_loss = tf.keras.losses.binary_crossentropy(tf.zeros_like(fake), fake)
+    real_loss = tf.reduce_mean(tf.keras.losses.binary_crossentropy(tf.ones_like(real), real))
+    fake_loss = tf.reduce_mean(tf.keras.losses.binary_crossentropy(tf.zeros_like(fake), fake))
     total_loss = real_loss + fake_loss
     return total_loss
 
@@ -25,7 +25,6 @@ def reconstruction_loss(pred, origin):
     return tf.reduce_mean(tf.nn.l2_loss(pred - origin))
 
 
-@tf.function
 def train_step(model: TBH, batch_data, bbn_dim, cbn_dim, batch_size, actor_opt: tf.optimizers.Optimizer,
                critic_opt: tf.optimizers.Optimizer):
     random_binary = (tf.sign(tf.random.uniform([batch_size, bbn_dim]) - 0.5) + 1) / 2
@@ -57,11 +56,12 @@ def train_step(model: TBH, batch_data, bbn_dim, cbn_dim, batch_size, actor_opt: 
 def test_step(model: TBH, batch_data):
     model_input = [batch_data]
     model_output = model(model_input, training=False)
-    return model_output[0].numpy()
+    return model_output.numpy()
 
 
 def train(set_name, bbn_dim, cbn_dim, batch_size, middle_dim=1024, max_iter=100000):
     model = TBH(set_name, bbn_dim, cbn_dim, middle_dim)
+
     data = Dataset(set_name=set_name, batch_size=batch_size)
 
     actor_opt = tf.keras.optimizers.Adam(1e-4)
@@ -80,6 +80,7 @@ def train(set_name, bbn_dim, cbn_dim, batch_size, middle_dim=1024, max_iter=1000
         os.makedirs(save_path)
 
     writer = tf.summary.create_file_writer(summary_path)
+    checkpoint = tf.train.Checkpoint(actor_opt=actor_opt, critic_opt=critic_opt, model=model)
 
     for i in range(max_iter):
         with writer.as_default():
@@ -90,6 +91,9 @@ def train(set_name, bbn_dim, cbn_dim, batch_size, middle_dim=1024, max_iter=1000
             train_label = train_batch[2].numpy()
             train_entry = train_batch[0].numpy()
             data.update(train_entry, train_code, train_label, 'train')
+
+            if i == 0:
+                print(model.summary())
 
             if (i + 1) % 100 == 0:
                 train_hook = hook(train_code, train_code, train_label, train_label)
@@ -107,11 +111,11 @@ def train(set_name, bbn_dim, cbn_dim, batch_size, middle_dim=1024, max_iter=1000
                 test_label = test_batch[2].numpy()
                 test_entry = test_batch[0].numpy()
                 data.update(test_entry, test_code, test_label, 'test')
-                test_hook = hook(test_code, data.train_code, test_label, data.train_label)
+                test_hook = eval_cls_map(test_code, data.train_code, test_label, data.train_label, at=1000)
                 tf.summary.scalar('test/hook', test_hook, step=i)
 
-                save_name = os.path.join(save_path, str(i) + '.ymmodel')
-                model.save(save_name)
+                save_name = os.path.join(save_path, 'ymmodel' + str(i) )
+                checkpoint.save(file_prefix=save_name)
 
 
 if __name__ == '__main__':

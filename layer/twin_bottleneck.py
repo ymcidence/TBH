@@ -10,7 +10,7 @@ def build_adjacency_hamming(tensor_in):
     :param tensor_in: [N D]
     :return:
     """
-    code_length = tf.shape(tensor_in)[1]
+    code_length = tf.cast(tf.shape(tensor_in)[1], tf.float32)
     m1 = tensor_in - 1
     c1 = tf.matmul(tensor_in, m1, transpose_b=True)
     c2 = tf.matmul(m1, tensor_in, transpose_b=True)

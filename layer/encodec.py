@@ -24,8 +24,9 @@ class Encoder(tf.keras.layers.Layer):
         batch_size = tf.shape(inputs)[0]
         fc_1 = self.fc_1(inputs)
         bbn = self.fc_2_1(fc_1)
-        eps = tf.cond(training, lambda: tf.random.uniform([batch_size, self.code_length], maxval=1),
-                      lambda: tf.ones([batch_size, self.code_length]) / 2.)
+        # eps = tf.cond(training, lambda: tf.random.uniform([batch_size, self.code_length], maxval=1),
+        #               lambda: tf.ones([batch_size, self.code_length]) / 2.)
+        eps = tf.ones([batch_size, self.code_length]) / 2.
 
         bbn, _ = binary_activation(bbn, eps)
         cbn = self.fc_2_2(fc_1)

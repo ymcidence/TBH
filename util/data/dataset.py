@@ -26,8 +26,7 @@ class ParsedRecord(object):
             return _id, _feat, _label
 
         record_name = os.path.join(REPO_PATH, 'data', self.set_name, self.part_name + '.tfrecords')
-        data = tf.data.TFRecordDataset(record_name)
-        data = data.map(data_parser, num_parallel_calls=50).prefetch(self.batch_size)
+        data = tf.data.TFRecordDataset(record_name).map(data_parser, num_parallel_calls=50).prefetch(self.batch_size)
         data = data.cache().repeat().shuffle(10000).batch(self.batch_size)
 
         # data = data.cache().repeat().batch(self.batch_size)
