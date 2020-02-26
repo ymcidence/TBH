@@ -119,4 +119,4 @@ def train(set_name, bbn_dim, cbn_dim, batch_size, middle_dim=1024, max_iter=1000
 
 
 if __name__ == '__main__':
-    train('cifar10', 32, 512, 256)
+    train('cifar10', 32, 512, 400)

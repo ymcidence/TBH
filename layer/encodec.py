@@ -42,7 +42,7 @@ class Decoder(tf.keras.layers.Layer):
         """
         super(Decoder, self).__init__()
         self.fc_1 = tf.keras.layers.Dense(middle_dim, activation='relu')
-        self.fc_2 = tf.keras.layers.Dense(feat_dim)
+        self.fc_2 = tf.keras.layers.Dense(feat_dim, activation='relu')
 
     def call(self, inputs, **kwargs):
         fc_1 = self.fc_1(inputs)
