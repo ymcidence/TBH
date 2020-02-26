@@ -21,7 +21,7 @@ This work supports `tf.data.TFRecordDataset` as the data feed.
 I provide the following data as training examples:
 * Cifar-10 ([Training](https://drive.google.com/open?id=1Ie0ucwA1r5tG9pETWbYaR50Y2Mz76h0A), [Test](https://drive.google.com/open?id=1GdHaetvz6cwo2UE7_epMFci62ViNiDjB))
 
-If one needs to run experiments on other datasets, please refer to `util/data/make_data.py` to build TFRecords.
+If one needs to run experiments on other datasets, please refer to [`util/data/make_data.py`](./util/data/make_data.py) to build TFRecords.
 
 Please organize the data folder as follows:
 ```angular2
