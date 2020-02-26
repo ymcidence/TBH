@@ -26,7 +26,7 @@ def binary_activation(logits, eps):
 
     def grad(_d_code, _d_prob):
         """
-        Distributional derivative with Bernoulli priors
+        Distributional derivative with Bernoulli probs
         :param _d_code: bp gradients through code
         :param _d_prob: bp gradients through prob
         :return:

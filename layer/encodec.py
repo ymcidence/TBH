@@ -3,8 +3,10 @@ import tensorflow as tf
 from layer.binary_activation import binary_activation
 
 
-# noinspection PyAbstractClass
 class Encoder(tf.keras.layers.Layer):
+    def compute_output_signature(self, input_signature):
+        pass
+
     def __init__(self, middle_dim, bbn_dim, cbn_dim):
         """
 
@@ -44,3 +46,10 @@ class Decoder(tf.keras.layers.Layer):
     def call(self, inputs, **kwargs):
         fc_1 = self.fc_1(inputs)
         return self.fc_2(fc_1)
+
+
+if __name__ == '__main__':
+    a = tf.ones([2, 4096], dtype=tf.float32)
+    encoder = Encoder(1024, 64, 512)
+    b = encoder(a)
+    print(encoder.trainable_variables)
