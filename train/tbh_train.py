@@ -73,7 +73,7 @@ def train(set_name, bbn_dim, cbn_dim, batch_size, middle_dim=1024, max_iter=1000
     time_string = strftime("%a%d%b%Y-%H%M%S", gmtime())
     result_path = os.path.join(REPO_PATH, 'result', set_name)
     save_path = os.path.join(result_path, 'model', time_string)
-    summary_path = os.path.join(result_path, 'log')
+    summary_path = os.path.join(result_path, 'log', time_string)
     if not os.path.exists(result_path):
         os.makedirs(result_path)
     if not os.path.exists(save_path):
