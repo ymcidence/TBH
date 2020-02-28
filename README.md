@@ -3,7 +3,7 @@
 ![fig](pic/pic.jpg)
 
 This is the main repository for our CVPR2020 work:\
-[Auto-Encoding Twin-Bottleneck Hashing]()
+[Auto-Encoding Twin-Bottleneck Hashing](https://arxiv.org/abs/2002.11930)
 
 ## Requirements
 ```angular2
