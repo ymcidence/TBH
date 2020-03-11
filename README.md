@@ -55,7 +55,7 @@ python ./run_jmlh.py
 ```
 to train the model.
 
-The resulting checkpoints will be placed in `./result/set_name_JMLH/model/date_of_today` with tensorboard events in `./result/set_name/log/date_of_today`.
+The resulting checkpoints will be placed in `./result/set_name_JMLH/model/date_of_today` with tensorboard events in `./result/set_name_JMLH/log/date_of_today`.
 
 The mAP results shown on tensorboard are just for illustration (the actual score would be slightly higher than the ones on tensorboard), 
 since I do not update all dataset codes upon testing. Please kindly evaluate the results by saving the proceeded codes after training.
