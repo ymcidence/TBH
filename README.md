@@ -1,9 +1,12 @@
 # Auto-Encoding Twin-Bottleneck Hashing
 
-![fig](pic/pic.jpg)
+This is the main repository for our [**CVPR2020** work](#tbh):
+* [\[CVPR20\] Auto-Encoding Twin-Bottleneck Hashing](https://arxiv.org/abs/2002.11930)
 
-This is the main repository for our CVPR2020 work:\
-[Auto-Encoding Twin-Bottleneck Hashing]()
+which is an unsupervised deep hashing work.
+
+We as well provide the code of our supervised deep hashing work on **ICCV2019 Workshops** [here](#jmlh):
+* [\[ICCVW19\] Embarrassingly Simple Binary Representation Learning](http://openaccess.thecvf.com/content_ICCVW_2019/html/CEFRL/Shen_Embarrassingly_Simple_Binary_Representation_Learning_ICCVW_2019_paper.html)
 
 ## Requirements
 ```angular2
@@ -28,17 +31,31 @@ Please organize the data folder as follows:
 data
   |-cifar10 (or other dataset names)
     |-train.tfrecords
-      test.tfrecords
+    |-test.tfrecords
 ```
 
-## Train
+## <a name="tbh"></a> Train Auto-Encoding Twin-Bottleneck Hashing
+![fig](pic/pic.jpg)
+
 Simply run
 ```angular2
 python ./run_tbh.py
 ```
 to train the model.
 
-The resulting checkpoints will be placed in `./result/set_name/model/date_of_today` with tensorboard events in `/result/set_name/log/date_of_today`.
+The resulting checkpoints will be placed in `./result/set_name/model/date_of_today` with tensorboard events in `./result/set_name/log/date_of_today`.
+
+The mAP results shown on tensorboard are just for illustration (the actual score would be slightly higher than the ones on tensorboard), 
+since I do not update all dataset codes upon testing. Please kindly evaluate the results by saving the proceeded codes after training.
+
+## <a name="jmlh"></a> Train Embarrassingly Simple Binary Representation Learning
+Simply run
+```angular2
+python ./run_jmlh.py
+```
+to train the model.
+
+The resulting checkpoints will be placed in `./result/set_name_JMLH/model/date_of_today` with tensorboard events in `./result/set_name/log/date_of_today`.
 
 The mAP results shown on tensorboard are just for illustration (the actual score would be slightly higher than the ones on tensorboard), 
 since I do not update all dataset codes upon testing. Please kindly evaluate the results by saving the proceeded codes after training.
