@@ -17,7 +17,7 @@ class JMLH(tf.keras.Model):
         batch_size = tf.shape(inputs[1])[0]
         fc_1 = self.fc_1(inputs[1])
         eps = tf.ones([batch_size, self.bbn_dim]) / 2.
-        code = binary_activation.binary_activation(fc_1, eps)
+        code, _ = binary_activation.binary_activation(fc_1, eps)
         cls = self.fc_2(code)
         return code, tf.nn.sigmoid(fc_1), cls
 
@@ -25,5 +25,5 @@ class JMLH(tf.keras.Model):
         batch_size = tf.shape(feat_in)[0]
         fc_1 = self.fc_1(feat_in)
         eps = tf.ones([batch_size, self.bbn_dim]) / 2.
-        code = binary_activation.binary_activation(fc_1, eps)
+        code, _ = binary_activation.binary_activation(fc_1, eps)
         return code

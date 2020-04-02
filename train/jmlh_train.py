@@ -26,7 +26,7 @@ def train_step(model: JMLH, batch_data, opt: tf.optimizers.Optimizer):
         model_input = batch_data
         code, prob, cls_prob = model(model_input, training=True)
 
-        loss = jmlh_loss(prob, cls_prob, label=batch_data[3])
+        loss = jmlh_loss(prob, cls_prob, label=batch_data[2])
 
         gradient = tape.gradient(loss, sources=model.trainable_variables)
         opt.apply_gradients(zip(gradient, model.trainable_variables))
